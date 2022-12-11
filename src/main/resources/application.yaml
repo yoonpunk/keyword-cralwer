@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: crawler
+      password: crawler123
+      database: crawlerdb
+      auto-index-creation: true
