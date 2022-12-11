@@ -4,6 +4,7 @@ import com.beige.keywordcrawler.quartzjob.CrawlerJob;
 import lombok.RequiredArgsConstructor;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,8 @@ import static org.quartz.CronScheduleBuilder.cronSchedule;
 @RequiredArgsConstructor
 public class QuartzSchedulingService {
 
+    @Value("${crawler.cron.trigger}")
+    private String cronExpression;
     private final CrawlerService crawlerService;
 
     @PostConstruct
@@ -33,7 +36,7 @@ public class QuartzSchedulingService {
         // CronTrigger
         Trigger cronTrigger = TriggerBuilder.newTrigger()
                 .withIdentity("trigger_crawl_ppomppu", Scheduler.DEFAULT_GROUP)
-                .withSchedule(cronSchedule("0 0/10 * * * ?"))
+                .withSchedule(cronSchedule(cronExpression))
                 .build();
 
         scheduler.scheduleJob(jobDetail, cronTrigger);

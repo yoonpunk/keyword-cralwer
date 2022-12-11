@@ -20,17 +20,15 @@ public class Posts {
 
     @Id
     private String id = UUID.randomUUID().toString();
-    @Indexed(unique = true)
-    private String postNo;
     private String title;
+    @Indexed(unique = true)
     private String originUrl;
 
     @CreatedDate
     private LocalDateTime createdTime = LocalDateTime.now();
 
     @Builder
-    public Posts(String postNo, String title, String text, String originUrl) {
-        this.postNo = postNo;
+    public Posts(String title, String text, String originUrl) {
         this.title = title;
         this.originUrl = originUrl;
     }
